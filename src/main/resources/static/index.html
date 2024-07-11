@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layout 管理界面大布局示例 - Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/layui/css/layui.css" rel="stylesheet">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">GTMD FAKE LLM</div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul id="chat-nav" class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-hide-xs layui-this" lay-on="nav-change-content" lay-data="chat-chatgpt-content"><a href="javascript:;">ChatGPT</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="chat-tongyi-content"><a href="javascript:;">通义千问</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="chat-xunfei-content"><a href="javascript:;">讯飞星火</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="chat-wenxin-content"><a href="javascript:;">文心一言</a></li>
+        </ul>
+        <ul id="draw-nav" class="layui-nav layui-layout-left">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-hide-xs layui-this" lay-on="nav-change-content" lay-data="draw-chatgpt-content"><a href="javascript:;">ChatGPT</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="draw-tongyi-content"><a href="javascript:;">通义千问</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="draw-xunfei-content"><a href="javascript:;">讯飞星火</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="draw-wenxin-content"><a href="javascript:;">文心一言</a></li>
+        </ul>
+        <ul id="discussion-nav" class="layui-nav layui-layout-left" style="display: none;">
+            <!-- 移动端显示 -->
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="discuss-content"><a href="javascript:;">推荐</a></li>
+            <li class="layui-nav-item layui-hide-xs" lay-on="nav-change-content" lay-data="discuss-content-new"><a href="javascript:;">最新</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                <a href="javascript:;">
+                    <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
+                    tester
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">Your Profile</a></dd>
+                    <dd><a href="javascript:;">Settings</a></dd>
+                    <dd><a href="javascript:;">Sign out</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">AI 工具箱</a>
+                    <dl class="layui-nav-child" >
+                        <dd><a class="layui-this" href="javascript:;" lay-on="chat-nav-show" >LLM对话结果比对</a></dd>
+                        <dd><a href="javascript:;" lay-on="draw-nav-show" >LLM绘图结果比对</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" lay-on="discuss-nav-show"><a href="javascript:;">讨论区</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">数据集批量检测（待开发）</a>
+                    <dl class="layui-nav-child">
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">关于</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div>
+                <div id="chat-chatgpt-content" class="layui-card layui-panel" >
+                    <div class="layui-card-header layui-font-16">
+                        chatGPT 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        chatGPT 的回答结果？
+                    </div>
+                </div>
+                <div id="chat-tongyi-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        tongyi 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        tongyi 的回答结果？
+                    </div>
+                </div>
+                <div id="chat-xunfei-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        xunfei 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        xunfei 的回答结果？
+                    </div>
+                </div>
+                <div id="chat-wenxin-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        wenxin 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        wenxin 的回答结果？
+                    </div>
+                </div>
+                <div id="draw-chatgpt-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        chatGPT 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        chatGPT 的绘图结果
+                    </div>
+                </div>
+                <div id="draw-tongyi-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        tongyi 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        tongyi 的绘图结果
+                    </div>
+                </div>
+                <div id="draw-xunfei-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        xunfei 提出的问题？
+                    </div>
+                    <div class="layui-card-body">
+                        xunfei 的绘图结果
+                    </div>
+                </div>
+                <div id="discuss-content" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        推荐话题讨论
+                    </div>
+                    <div class="layui-card-body">
+                        推荐话题讨论详情
+                    </div>
+                </div>
+                <div id="discuss-content-new" class="layui-card layui-panel" style="display: none;">
+                    <div class="layui-card-header layui-font-16">
+                        最新话题讨论
+                    </div>
+                    <div class="layui-card-body">
+                        最新话题讨论详情
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer-chat-box" class="layui-footer" style="height: 80px; line-height: 80px" >
+        <div class="layui-form-item">
+            <div class="layui-input-group" style="width: 100%;">
+                <input style="margin-top: 23px; margin-left: 160px" type="text" placeholder="输入问题" class="layui-input">
+                <div class="layui-input-suffix">
+                    <button type="button" class="layui-btn" style="margin-left: 40px">
+                        <i class="layui-icon layui-icon-edit"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/layui/layui.js"></script>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util', 'jquery'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+        var util = layui.util;
+        var $ = layui.$;
+        var jQuery = layui.jquery;
+        //点击事件
+        util.on('lay-on', {
+            'chat-nav-show': function(){ //显示对话标签页
+                jQuery("#discussion-nav").hide();
+                jQuery("#draw-nav").hide();
+                jQuery("#chat-nav").show();
+                //标签页重置为第一个
+                var showDivId = "chat-chatgpt-content";
+                jQuery("#" + showDivId).show(); //显示当前模型的内容
+                jQuery("#" + showDivId).siblings().hide(); //隐藏所有同级的模型结果
+                jQuery("#chat-nav").find("li").removeClass("layui-this");
+                jQuery("#chat-nav").find("li").eq(1).addClass("layui-this");
+
+                //显示对应的输入框
+                jQuery("#footer-chat-box").show();
+            },
+            'draw-nav-show': function(){ //显示绘图标签页
+                jQuery("#discussion-nav").hide();
+                jQuery("#chat-nav").hide();
+                jQuery("#draw-nav").show();
+
+                var showDivId = "draw-chatgpt-content";
+                jQuery("#" + showDivId).show(); //显示当前模型的内容
+                jQuery("#" + showDivId).siblings().hide(); //隐藏所有同级的模型结果
+                jQuery("#draw-nav").find("li").removeClass("layui-this");
+                jQuery("#draw-nav").find("li").eq(1).addClass("layui-this");
+
+                //显示对应的输入框
+                jQuery("#footer-chat-box").show();
+            },
+            'discuss-nav-show': function(){ //根据左侧功能切换
+                jQuery("#chat-nav").hide();
+                jQuery("#draw-nav").hide();
+                jQuery("#discussion-nav").show();
+
+                //默认显示第一个推荐讨论
+                var showDivId = "discuss-content";
+                jQuery("#" + showDivId).show(); //显示当前模型的内容
+                jQuery("#" + showDivId).siblings().hide(); //隐藏所有同级的模型结果
+                jQuery("#discussion-nav").find("li").removeClass("layui-this");
+                jQuery("#discussion-nav").find("li").eq(1).addClass("layui-this");
+
+                //隐藏问题输入框
+                jQuery("#footer-chat-box").hide();
+            },
+            'nav-change-content': function(e){  //根据不同大模型切换
+                var showDivId = jQuery(e).attr("lay-data");
+                jQuery("#" + showDivId).show(); //显示当前模型的内容
+                jQuery("#" + showDivId).siblings().hide(); //隐藏所有同级的模型结果
+            }
+        });
+        //头部事件
+        util.event('lay-header-event', {
+            menuLeft: function(othis){ // 左侧菜单事件
+                layer.msg('展开左侧菜单的操作', {icon: 0});
+            },
+            menuRight: function(){  // 右侧菜单事件
+                layer.open({
+                    type: 1,
+                    title: '更多',
+                    content: '<div style="padding: 15px;">处理右侧面板的操作</div>',
+                    area: ['260px', '100%'],
+                    offset: 'rt', // 右上角
+                    anim: 'slideLeft', // 从右侧抽屉滑出
+                    shadeClose: true,
+                    scrollbar: false
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
